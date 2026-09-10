@@ -1,70 +1,52 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#151917" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <title>ما يرونه — 0.5</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+<meta name="theme-color" content="#111512" />
+<title>ما يرونه — 0.6</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="rotate" class="rotate"><div><b>↻</b><strong>أدر الهاتف أفقياً</strong><span>هذه النسخة مصممة للوضع الأفقي</span></div></div>
-  <main id="app">
-    <section id="worldWrap" class="world-wrap">
-      <canvas id="game" width="1040" height="720" aria-label="المدينة"></canvas>
-      <div class="brand"><b>ما يرونه</b><span>0.5 · حكايات تتقاطع</span></div>
-      <div id="phaseTag" class="phase-tag">مدينة هادئة</div>
-      <div id="tip" class="tip">حرّك الكادر وابحث عن شيء مختلف</div>
-      <button id="shutter" class="shutter" aria-label="التقاط صورة"><i></i></button>
-      <div id="flash" class="flash"></div>
-      <div id="toast" class="toast"></div>
-    </section>
+<div class="rotate"><div><b>↻</b><strong>أدر الهاتف أفقياً</strong><span>اللعبة مصممة للوضع الأفقي</span></div></div>
+<main id="app">
+  <section class="world-wrap">
+    <canvas id="game" width="1180" height="720"></canvas>
+    <div class="brand"><b>ما يرونه</b><span>0.6 · المجتمع هو القصة</span></div>
+    <div id="phase" class="phase">مدينة عادية</div>
+    <div id="hint" class="hint">حرّك الكادر. صوّر ما تراه مهمًا.</div>
+    <button id="shutter" class="shutter" aria-label="التقاط"><i></i></button>
+    <div id="flash" class="flash"></div>
+    <div id="toast" class="toast"></div>
+  </section>
+  <aside id="broadcast" class="broadcast">
+    <header><span class="dot"></span><div><small>البث العام</small><b>ما يراه المجتمع</b></div></header>
+    <div class="screen"><canvas id="shot" width="320" height="200"></canvas><span id="idle">بانتظار أول لقطة</span></div>
+    <div id="caption" class="caption">في البداية، لا يوجد خبر.</div>
+    <div class="reach"><span>مدى الانتشار</span><div><i id="reachBar"></i></div><b id="reachText">—</b></div>
+    <div class="meters">
+      <div><span>الخوف</span><b id="fear">0</b></div>
+      <div><span>الغضب</span><b id="anger">0</b></div>
+      <div><span>الانقسام</span><b id="division">0</b></div>
+    </div>
+    <div id="impact" class="impact">الصورة الناجحة لا تغيّر عدادًا فقط؛ ستغيّر ما يفعله الناس أمامك.</div>
+    <button id="help">طريقة اللعب</button>
+  </aside>
 
-    <aside id="broadcast" class="broadcast">
-      <header><span class="live-dot"></span><div><small>البث العام</small><b>ما يراه الجميع</b></div></header>
-      <div class="screen"><canvas id="shot" width="320" height="205"></canvas><div id="signal" class="signal">بانتظار أول صورة</div></div>
-      <div id="caption" class="caption">التقط صورة، ثم راقب الناس لا الشاشة.</div>
-      <div class="reach"><span>انتشار الصورة</span><div><i id="reachFill"></i></div><b id="reachText">—</b></div>
-      <div class="city-state">
-        <div><span>الخوف</span><b id="fear">4</b></div>
-        <div><span>الغضب</span><b id="anger">5</b></div>
-        <div><span>الظهور</span><b id="vanity">3</b></div>
-      </div>
-      <div id="effect" class="effect">بعد البث ستتوقف الشخصيات لحظة، تنظر إلى الشاشة، ثم يتغير سلوكها.</div>
-      <button id="help" class="help">كيف ألعب؟</button>
-    </aside>
+  <section id="intro" class="modal on"><div class="card">
+    <span>تجربة اجتماعية قصيرة</span><h1>ما يرونه</h1>
+    <p>لا توجد اختيارات بعد التصوير. المجتمع يتعلم فقط من <b>اللحظات التي تجعلها مرئية.</b></p>
+    <p>في البداية الجميع يعيش مع الجميع. لاحقًا قد تتحول فروق تافهة إلى هوية، ثم خوف، ثم تعصب، ثم عنف.</p>
+    <div class="flow"><i>صورة</i><b>←</b><i>انتشار</i><b>←</b><i>تقليد</i><b>←</b><i>صراع</i></div>
+    <button id="start">ابدأ</button>
+  </div></section>
 
-    <section id="intro" class="modal on">
-      <div class="card intro-card">
-        <span class="chapter">نسخة تجريبية 0.5</span>
-        <h1>ما يرونه</h1>
-        <p>لا توجد اختيارات بعد التصوير. أنت تتابع أشخاصاً حقيقيين داخل هذه المدينة: <b>سامي، نور، مالك، ليان، عمر…</b> وما تلتقطه منهم يغيّر ما سيحدث لهم لاحقاً.</p>
-        <p>ابدأ بهدوء. سامي يرتدي قبعة قديمة يحبها، نور ومالك صديقان رغم اختلاف جماعتيهما، وليان تتوقف لمساعدة عمر. لا توجد قصة مكتوبة فوق رؤوسهم؛ <b>الكاميرا هي التي ستقرر أي خيط يصبح قصة المدينة.</b></p>
-        <div class="mini-rules"><span>لقطة واحدة</span><i>←</i><span>رد فعل</span><i>←</i><span>حدث جديد</span></div>
-        <button id="start">ابدأ المشاهدة</button>
-      </div>
-    </section>
+  <section id="helpModal" class="modal"><div class="card small"><button id="closeHelp" class="x">×</button>
+    <h2>كيف تلعب؟</h2><p>اسحب الكادر فوق الساحة واضغط زر التصوير. لا تختَر عنوانًا ولا نتيجة. بعد اللقطة، راقب ما يتغير في المجتمع.</p>
+    <p>الهدوء غالبًا لا ينتشر. الخوف والغضب ينتشران أسرع. تكرار نفس النوع من الصور يجعل الناس يتوقعونه ثم يصنعونه بأنفسهم.</p>
+  </div></section>
 
-    <section id="helpModal" class="modal">
-      <div class="card help-card">
-        <button id="closeHelp" class="x">×</button>
-        <h2>طريقة اللعب</h2>
-        <p>اسحب الكادر فوق المدينة. اضغط زر التصوير عندما ترى لحظة تستحق البث. لا تفعل أي شيء بعد ذلك — فقط شاهد النتيجة.</p>
-        <p>مثال: إذا صورت شخصاً غاضباً وحده، سيرى الناس الغضب بلا سياق. إذا ظهر الطرف الآخر معه تصبح الصورة صراعاً بين مجموعتين. وإذا ظهر جمهور خائف في الكادر قد يصبح <b>الخوف نفسه</b> هو ما ينتشر.</p>
-        <p>الأثر يجب أن تراه أمامك: أشخاص يلبسون نفس القبعة، آخرون يهربون، يتشاجرون، يساعدون، أو يبحثون عن الكاميرا.</p>
-      </div>
-    </section>
-
-    <section id="ending" class="modal">
-      <div class="card end-card">
-        <span class="chapter">نهاية التجربة</span>
-        <h2 id="endTitle">—</h2>
-        <p id="endText">—</p>
-        <button onclick="location.reload()">إعادة المدينة</button>
-      </div>
-    </section>
-  </main>
-  <script src="game.js"></script>
-</body>
-</html>
+  <section id="ending" class="modal"><div class="card ending"><span>النهاية</span><h2 id="endTitle">—</h2><p id="endText">—</p><div id="epilogue" class="epilogue"></div><button onclick="location.reload()">ابدأ من جديد</button></div></section>
+</main>
+<script src="game.js"></script>
+</body></html>
