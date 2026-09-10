@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#efe8d8" />
+  <title>What They See — Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell" aria-label="What They See prototype">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">PROTOTYPE 0.1</div>
+        <h1>WHAT THEY SEE</h1>
+      </div>
+      <button id="soundBtn" class="icon-btn" aria-label="Toggle sound">♪</button>
+    </header>
+
+    <section id="hud" class="hud" aria-label="Society status">
+      <div class="stat"><span>CALM</span><b id="calmValue">68</b></div>
+      <div class="stat"><span>TRUST</span><b id="trustValue">62</b></div>
+      <div class="stat"><span>HYPE</span><b id="hypeValue">22</b></div>
+    </section>
+
+    <section class="stage-wrap">
+      <canvas id="game" width="390" height="650" aria-label="Game world"></canvas>
+      <div id="hint" class="hint">Drag the lens. Capture what people will see.</div>
+      <div id="flash" class="flash"></div>
+      <div id="toast" class="toast" role="status"></div>
+    </section>
+
+    <footer class="controls">
+      <div class="trend">
+        <span class="trend-dot"></span>
+        <div><small>TRENDING</small><strong id="trendText">ordinary life</strong></div>
+      </div>
+      <button id="captureBtn" class="capture" aria-label="Capture photo"><span></span></button>
+      <div class="shots"><small>SHOTS</small><strong id="shotCount">0</strong></div>
+    </footer>
+  </main>
+
+  <div id="editor" class="editor hidden" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+    <div class="editor-card">
+      <div class="photo-wrap"><canvas id="photo" width="320" height="220"></canvas><div class="photo-label">YOUR SHOT</div></div>
+      <h2 id="editorTitle">Choose the story people will see</h2>
+      <p id="eventSummary">A normal moment.</p>
+      <div id="headlineOptions" class="headline-options"></div>
+      <button id="skipBtn" class="skip-btn">Don't post it</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
