@@ -1,33 +1,36 @@
-# What They See
+# What They See / ما يرونه
 
-Mobile-first social simulation game prototype inspired by the idea that what gets framed and amplified can change a society.
+Mobile-first landscape social-observation game prototype.
 
-## Prototype 0.1
+## Prototype 0.2
 
-- Portrait/mobile-first canvas game
-- 26 autonomous characters
-- Distinct character accessories and moods
-- Camera/lens interaction with touch or mouse
-- Context-sensitive events: kindness, argument, prank, isolation
-- Headline/editor choice after each photo
-- Calm, Trust and Hype society variables
-- Fame/attention feedback on photographed characters
-- No external runtime dependencies
+The player is a photographer/editor whose framing and headlines change how a simulated city behaves.
+
+### Play loop
+
+1. Observe multi-character events in the city.
+2. Move and resize the camera frame.
+3. Capture a composition. The same event produces a different story when one actor, both actors, or the surrounding crowd is in-frame.
+4. Choose how to publish: truthful, sensational, misleading, analytical, etc.
+5. Watch reach, comments and consequences.
+6. NPC fame, reputation, attention-seeking, anger and social behavior change based on publication history.
+7. Complete seven posts and receive an ending based on Trust, Tension and Hype.
+
+### Implemented systems
+
+- Arabic-first RTL UI.
+- Landscape 16:9 gameplay and phone rotation prompt.
+- Procedurally animated characters with multiple states and accessories.
+- Multi-actor event system: argument, lost wallet, helping, prank, street performance, selfie/fame.
+- Camera composition analysis and three framing sizes.
+- Context/truth meter calculated by visible actors.
+- Branching Arabic headlines per composition.
+- Reach, shares, follower growth, comments and persistent society stats.
+- Persistent NPC fame/reputation/attention/anger effects.
+- Consequence events seeded by prior publications.
+- Dynamic missions, streaks and multiple end-of-day outcomes.
+- Canvas-only renderer, no third-party runtime dependencies.
 
 ## Run locally
 
-Open `index.html` with a local static server, for example:
-
-```bash
-python3 -m http.server 8080
-```
-
-Then open `http://localhost:8080`.
-
-## Controls
-
-- Drag/touch inside the city to position the camera frame.
-- Press the red shutter button (or Space on desktop) to capture.
-- Choose how to frame the story.
-
-This is an early gameplay prototype, not final art or final game design.
+Serve the repository root with any static web server and open `index.html` in a landscape browser.

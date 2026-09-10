@@ -1,55 +1,144 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#efe8d8" />
-  <title>What They See — Prototype</title>
+  <meta name="theme-color" content="#171b19" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>ما يرونه — What They See</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main id="game-shell" aria-label="What They See prototype">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow">PROTOTYPE 0.1</div>
-        <h1>WHAT THEY SEE</h1>
-      </div>
-      <button id="soundBtn" class="icon-btn" aria-label="Toggle sound">♪</button>
-    </header>
-
-    <section id="hud" class="hud" aria-label="Society status">
-      <div class="stat"><span>CALM</span><b id="calmValue">68</b></div>
-      <div class="stat"><span>TRUST</span><b id="trustValue">62</b></div>
-      <div class="stat"><span>HYPE</span><b id="hypeValue">22</b></div>
-    </section>
-
-    <section class="stage-wrap">
-      <canvas id="game" width="390" height="650" aria-label="Game world"></canvas>
-      <div id="hint" class="hint">Drag the lens. Capture what people will see.</div>
-      <div id="flash" class="flash"></div>
-      <div id="toast" class="toast" role="status"></div>
-    </section>
-
-    <footer class="controls">
-      <div class="trend">
-        <span class="trend-dot"></span>
-        <div><small>TRENDING</small><strong id="trendText">ordinary life</strong></div>
-      </div>
-      <button id="captureBtn" class="capture" aria-label="Capture photo"><span></span></button>
-      <div class="shots"><small>SHOTS</small><strong id="shotCount">0</strong></div>
-    </footer>
-  </main>
-
-  <div id="editor" class="editor hidden" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
-    <div class="editor-card">
-      <div class="photo-wrap"><canvas id="photo" width="320" height="220"></canvas><div class="photo-label">YOUR SHOT</div></div>
-      <h2 id="editorTitle">Choose the story people will see</h2>
-      <p id="eventSummary">A normal moment.</p>
-      <div id="headlineOptions" class="headline-options"></div>
-      <button id="skipBtn" class="skip-btn">Don't post it</button>
+  <div id="rotateOverlay" class="rotate-overlay">
+    <div class="rotate-card">
+      <div class="phone-icon">↻</div>
+      <strong>أدر الهاتف أفقياً</strong>
+      <span>هذه اللعبة مصممة للوضع الأفقي</span>
     </div>
   </div>
 
+  <main id="gameApp" aria-label="لعبة ما يرونه">
+    <canvas id="game" width="1280" height="720"></canvas>
+
+    <header class="top-ui">
+      <section class="brand-panel glass">
+        <div class="brand-line"><b>ما يرونه</b><span>WHAT THEY SEE</span></div>
+        <div id="dayLabel" class="day-label">اليوم الأول · المدينة الهادئة</div>
+      </section>
+
+      <section class="mission glass">
+        <span class="mini">المهمة الحالية</span>
+        <strong id="missionText">التقط حدثًا حقيقيًا</strong>
+        <div class="mission-progress"><i id="missionBar"></i></div>
+      </section>
+
+      <section class="stats glass">
+        <div><span>الثقة</span><b id="trustStat">62</b></div>
+        <div><span>التوتر</span><b id="tensionStat">24</b></div>
+        <div><span>هوس الترند</span><b id="hypeStat">18</b></div>
+        <div class="followers"><span>المتابعون</span><b id="followersStat">1,240</b></div>
+      </section>
+    </header>
+
+    <aside class="left-ui">
+      <div class="timer glass"><span>الوقت</span><b id="timer">02:30</b></div>
+      <div class="posts glass"><span>المنشورات</span><b><i id="postCount">0</i>/7</b></div>
+      <button id="helpBtn" class="small-btn glass" aria-label="المساعدة">؟</button>
+    </aside>
+
+    <section id="trendStrip" class="trend-strip glass">
+      <span class="live-dot"></span>
+      <small>الرائج الآن</small>
+      <strong id="trendText">الحياة اليومية</strong>
+      <em id="latestHeadline"></em>
+    </section>
+
+    <footer class="camera-ui glass">
+      <button id="zoomOut" class="zoom-btn" aria-label="تصغير الكادر">−</button>
+      <div class="zoom-info"><small>حجم الكادر</small><b id="zoomLabel">متوسط</b></div>
+      <button id="captureBtn" class="capture" aria-label="التقاط صورة"><i></i></button>
+      <div class="context-live"><small>داخل الكادر</small><b id="subjectCount">0 أشخاص</b></div>
+      <button id="zoomIn" class="zoom-btn" aria-label="تكبير الكادر">+</button>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <div id="flash" class="flash"></div>
+
+    <section id="intro" class="modal show">
+      <div class="intro-card paper">
+        <div class="logo-mark">◉</div>
+        <div class="intro-copy">
+          <span class="chapter">نسخة تجريبية 0.2</span>
+          <h1>ما يرونه</h1>
+          <p>أنت لست حاكم المدينة. أنت فقط من يقرر <b>ما الذي سيراه الناس.</b></p>
+          <p>حرّك الكادر، قرّب أو وسّع اللقطة، والتقط الأحداث. وجود شخص واحد أو شخصين أو الجمهور داخل الصورة قد يغيّر القصة بالكامل.</p>
+          <div class="rules">
+            <span>انشر 7 صور</span><span>ارفع جمهورك</span><span>لا تفقد ثقة المدينة</span>
+          </div>
+          <button id="startBtn" class="primary">ابدأ اليوم الأول</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="editor" class="modal">
+      <div class="editor-card paper">
+        <div class="photo-column">
+          <div class="photo-frame"><canvas id="photo" width="560" height="350"></canvas><span class="shot-badge">لقطتك</span></div>
+          <div class="composition-row">
+            <div><small>قراءة الصورة</small><strong id="compositionLabel">—</strong></div>
+            <div class="truth-meter"><small>السياق الظاهر</small><span><i id="truthFill"></i></span><b id="truthPercent">0%</b></div>
+          </div>
+        </div>
+        <div class="story-column">
+          <span class="chapter">غرفة التحرير</span>
+          <h2 id="storyTitle">ما الذي حدث في هذه الصورة؟</h2>
+          <p id="storySummary"></p>
+          <div id="headlineOptions" class="headline-options"></div>
+          <button id="discardBtn" class="discard">لا تنشر الصورة</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="viral" class="modal">
+      <div class="viral-card paper">
+        <span class="chapter">بعد النشر</span>
+        <h2 id="viralHeadline">—</h2>
+        <div class="viral-numbers">
+          <div><small>المشاهدات</small><b id="viewsNum">0</b></div>
+          <div><small>المشاركات</small><b id="sharesNum">0</b></div>
+          <div><small>متابعون جدد</small><b id="newFollowersNum">0</b></div>
+        </div>
+        <div id="comments" class="comments"></div>
+        <div id="consequence" class="consequence"></div>
+        <button id="backCityBtn" class="primary">العودة إلى المدينة</button>
+      </div>
+    </section>
+
+    <section id="endScreen" class="modal">
+      <div class="end-card paper">
+        <span class="chapter">نهاية اليوم الأول</span>
+        <h2 id="endingTitle">—</h2>
+        <p id="endingText">—</p>
+        <div class="end-grid">
+          <div><small>المتابعون</small><b id="endFollowers">0</b></div>
+          <div><small>الثقة</small><b id="endTrust">0</b></div>
+          <div><small>التوتر</small><b id="endTension">0</b></div>
+          <div><small>أفضل سلسلة</small><b id="endCombo">0</b></div>
+        </div>
+        <button id="restartBtn" class="primary">إعادة اليوم</button>
+      </div>
+    </section>
+
+    <section id="help" class="modal">
+      <div class="help-card paper">
+        <button id="closeHelp" class="xbtn">×</button>
+        <h2>كيف تلعب؟</h2>
+        <p>اسحب الكادر فوق المدينة. استعمل <b>+</b> و<b>−</b> لتغيير حجم اللقطة. راقب ما يحدث قبل التصوير.</p>
+        <p>مثال: شخص يعيد محفظة لصاحبها. لو صورت الشخص وحده والمحفظة في يده، قد تبدو اللقطة كأنها سرقة. لو وسعت الكادر ليظهر صاحب المحفظة، تظهر الحقيقة.</p>
+        <p>كل خبر يغير الناس. الشهرة تجعل البعض يبحث عن الكاميرا، الأخبار الغاضبة تزيد المشاجرات، والقصص الإيجابية قد تجعل أشخاصًا آخرين يقلدونها.</p>
+      </div>
+    </section>
+  </main>
   <script src="game.js"></script>
 </body>
 </html>
