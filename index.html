@@ -1,144 +1,22 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#171b19" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <title>ما يرونه — What They See</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div id="rotateOverlay" class="rotate-overlay">
-    <div class="rotate-card">
-      <div class="phone-icon">↻</div>
-      <strong>أدر الهاتف أفقياً</strong>
-      <span>هذه اللعبة مصممة للوضع الأفقي</span>
-    </div>
-  </div>
-
-  <main id="gameApp" aria-label="لعبة ما يرونه">
-    <canvas id="game" width="1280" height="720"></canvas>
-
-    <header class="top-ui">
-      <section class="brand-panel glass">
-        <div class="brand-line"><b>ما يرونه</b><span>WHAT THEY SEE</span></div>
-        <div id="dayLabel" class="day-label">اليوم الأول · المدينة الهادئة</div>
-      </section>
-
-      <section class="mission glass">
-        <span class="mini">المهمة الحالية</span>
-        <strong id="missionText">التقط حدثًا حقيقيًا</strong>
-        <div class="mission-progress"><i id="missionBar"></i></div>
-      </section>
-
-      <section class="stats glass">
-        <div><span>الثقة</span><b id="trustStat">62</b></div>
-        <div><span>التوتر</span><b id="tensionStat">24</b></div>
-        <div><span>هوس الترند</span><b id="hypeStat">18</b></div>
-        <div class="followers"><span>المتابعون</span><b id="followersStat">1,240</b></div>
-      </section>
-    </header>
-
-    <aside class="left-ui">
-      <div class="timer glass"><span>الوقت</span><b id="timer">02:30</b></div>
-      <div class="posts glass"><span>المنشورات</span><b><i id="postCount">0</i>/7</b></div>
-      <button id="helpBtn" class="small-btn glass" aria-label="المساعدة">؟</button>
-    </aside>
-
-    <section id="trendStrip" class="trend-strip glass">
-      <span class="live-dot"></span>
-      <small>الرائج الآن</small>
-      <strong id="trendText">الحياة اليومية</strong>
-      <em id="latestHeadline"></em>
-    </section>
-
-    <footer class="camera-ui glass">
-      <button id="zoomOut" class="zoom-btn" aria-label="تصغير الكادر">−</button>
-      <div class="zoom-info"><small>حجم الكادر</small><b id="zoomLabel">متوسط</b></div>
-      <button id="captureBtn" class="capture" aria-label="التقاط صورة"><i></i></button>
-      <div class="context-live"><small>داخل الكادر</small><b id="subjectCount">0 أشخاص</b></div>
-      <button id="zoomIn" class="zoom-btn" aria-label="تكبير الكادر">+</button>
-    </footer>
-
-    <div id="toast" class="toast"></div>
-    <div id="flash" class="flash"></div>
-
-    <section id="intro" class="modal show">
-      <div class="intro-card paper">
-        <div class="logo-mark">◉</div>
-        <div class="intro-copy">
-          <span class="chapter">نسخة تجريبية 0.2</span>
-          <h1>ما يرونه</h1>
-          <p>أنت لست حاكم المدينة. أنت فقط من يقرر <b>ما الذي سيراه الناس.</b></p>
-          <p>حرّك الكادر، قرّب أو وسّع اللقطة، والتقط الأحداث. وجود شخص واحد أو شخصين أو الجمهور داخل الصورة قد يغيّر القصة بالكامل.</p>
-          <div class="rules">
-            <span>انشر 7 صور</span><span>ارفع جمهورك</span><span>لا تفقد ثقة المدينة</span>
-          </div>
-          <button id="startBtn" class="primary">ابدأ اليوم الأول</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="editor" class="modal">
-      <div class="editor-card paper">
-        <div class="photo-column">
-          <div class="photo-frame"><canvas id="photo" width="560" height="350"></canvas><span class="shot-badge">لقطتك</span></div>
-          <div class="composition-row">
-            <div><small>قراءة الصورة</small><strong id="compositionLabel">—</strong></div>
-            <div class="truth-meter"><small>السياق الظاهر</small><span><i id="truthFill"></i></span><b id="truthPercent">0%</b></div>
-          </div>
-        </div>
-        <div class="story-column">
-          <span class="chapter">غرفة التحرير</span>
-          <h2 id="storyTitle">ما الذي حدث في هذه الصورة؟</h2>
-          <p id="storySummary"></p>
-          <div id="headlineOptions" class="headline-options"></div>
-          <button id="discardBtn" class="discard">لا تنشر الصورة</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="viral" class="modal">
-      <div class="viral-card paper">
-        <span class="chapter">بعد النشر</span>
-        <h2 id="viralHeadline">—</h2>
-        <div class="viral-numbers">
-          <div><small>المشاهدات</small><b id="viewsNum">0</b></div>
-          <div><small>المشاركات</small><b id="sharesNum">0</b></div>
-          <div><small>متابعون جدد</small><b id="newFollowersNum">0</b></div>
-        </div>
-        <div id="comments" class="comments"></div>
-        <div id="consequence" class="consequence"></div>
-        <button id="backCityBtn" class="primary">العودة إلى المدينة</button>
-      </div>
-    </section>
-
-    <section id="endScreen" class="modal">
-      <div class="end-card paper">
-        <span class="chapter">نهاية اليوم الأول</span>
-        <h2 id="endingTitle">—</h2>
-        <p id="endingText">—</p>
-        <div class="end-grid">
-          <div><small>المتابعون</small><b id="endFollowers">0</b></div>
-          <div><small>الثقة</small><b id="endTrust">0</b></div>
-          <div><small>التوتر</small><b id="endTension">0</b></div>
-          <div><small>أفضل سلسلة</small><b id="endCombo">0</b></div>
-        </div>
-        <button id="restartBtn" class="primary">إعادة اليوم</button>
-      </div>
-    </section>
-
-    <section id="help" class="modal">
-      <div class="help-card paper">
-        <button id="closeHelp" class="xbtn">×</button>
-        <h2>كيف تلعب؟</h2>
-        <p>اسحب الكادر فوق المدينة. استعمل <b>+</b> و<b>−</b> لتغيير حجم اللقطة. راقب ما يحدث قبل التصوير.</p>
-        <p>مثال: شخص يعيد محفظة لصاحبها. لو صورت الشخص وحده والمحفظة في يده، قد تبدو اللقطة كأنها سرقة. لو وسعت الكادر ليظهر صاحب المحفظة، تظهر الحقيقة.</p>
-        <p>كل خبر يغير الناس. الشهرة تجعل البعض يبحث عن الكاميرا، الأخبار الغاضبة تزيد المشاجرات، والقصص الإيجابية قد تجعل أشخاصًا آخرين يقلدونها.</p>
-      </div>
-    </section>
-  </main>
-  <script src="game.js"></script>
-</body>
-</html>
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><title>ما يرونه 0.3</title><style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body,#a{margin:0;width:100%;height:100%;overflow:hidden;background:#111;color:#fff;font-family:Tahoma,Arial;touch-action:none}canvas#c{width:100%;height:100%;display:block}.g{position:absolute;background:#111d;border:1px solid #fff3;border-radius:12px;backdrop-filter:blur(6px)}#brand{right:12px;top:10px;padding:8px 12px}#brand b{display:block}#brand small{font-size:9px;color:#ccc}#mood{left:12px;top:10px;padding:8px 11px;width:160px;font-size:10px}#mood b{float:left}.bar{height:5px;background:#fff2;border-radius:8px;margin-top:7px;overflow:hidden}.bar i{display:block;height:100%;width:10%;background:#719b79;transition:.3s}#tv{left:12px;bottom:12px;width:min(29vw,310px);min-width:220px;padding:7px}#tv header{font-size:9px;margin-bottom:5px;color:#ddd}#tv header b{float:left;color:#efc96e}#tv canvas{width:100%;aspect-ratio:16/8.5;background:#222;border-radius:7px}#cap{position:absolute;right:24px;bottom:22px;width:74px;height:74px;border-radius:50%;border:4px solid #eee;background:#171b18;display:grid;place-items:center}#cap i{width:51px;height:51px;border-radius:50%;background:#eee;border:3px solid #222}#help{position:absolute;right:17px;top:58px;width:34px;height:34px;border-radius:50%;color:#fff;font-weight:bold}#tip{left:50%;top:12px;transform:translateX(-50%);padding:7px 11px;font-size:10px}.toast{position:absolute;left:50%;bottom:20px;transform:translate(-50%,15px);opacity:0;background:#111e;padding:8px 12px;border-radius:9px;font-size:10px;transition:.2s}.toast.on{opacity:1;transform:translate(-50%,0)}#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}#flash.on{animation:f .18s}.modal{position:absolute;inset:0;background:#111d;display:none;place-items:center;padding:18px}.modal.on{display:grid}.card{width:min(650px,92vw);background:#eee6d5;color:#252a26;border:2px solid #252a26;border-radius:18px;padding:24px;box-shadow:8px 8px 0 #111}.card h1,.card h2{margin:3px 0 8px}.card p{line-height:1.7;font-size:14px}.card button{border:0;background:#252a26;color:#fff;border-radius:9px;padding:10px 20px;font-weight:bold}.x{float:left;padding:5px 10px!important}.rot{display:none;position:fixed;inset:0;z-index:99;background:#111;place-items:center;text-align:center}@media(orientation:portrait) and (max-width:800px){.rot{display:grid}}@keyframes f{0%{opacity:.9}100%{opacity:0}}
+</style></head><body><div class="rot">↻<br><b>أدر الهاتف أفقياً</b></div><main id="a"><canvas id="c" width="1280" height="720"></canvas><div id="brand" class="g"><b>ما يرونه</b><small>0.3 · الصورة هي القرار</small></div><div id="mood" class="g"><span>مزاج المدينة</span><b id="mt">هادئة</b><div class="bar"><i id="mf"></i></div></div><div id="tv" class="g"><header>البث الآن <b id="reach">—</b></header><canvas id="shot" width="320" height="170"></canvas><div id="caption" style="font-size:10px;line-height:1.4;padding-top:5px">ابحث عن لحظة تستحق أن يراها الجميع.</div></div><div id="tip" class="g">اسحب الكادر · اضغط للتصوير</div><button id="cap"><i></i></button><button id="help" class="g">؟</button><div id="toast" class="toast"></div><div id="flash"></div>
+<section id="intro" class="modal on"><div class="card"><h1>ما يرونه</h1><p>لا توجد اختيارات بعد التصوير. أنت تختار فقط <b>من يدخل الكادر ومتى تلتقط الصورة.</b></p><p>الصورة تُبث فوراً، والناس يكررون ما يرونه. تصوير طرف واحد من مشادة ليس مثل تصوير الطرفين، وتصوير الخائف وحده قد يصنع خوفاً أكبر من الحدث نفسه.</p><button id="start">ابدأ</button></div></section><section id="h" class="modal"><div class="card"><button id="close" class="x">×</button><h2>زر واحد فقط</h2><p>حرّك الكادر والتقط. لا تختَر عنواناً ولا نتيجة. اللعبة تستنتج الرسالة من الصورة نفسها: شخص واحد، الطرفان، الجمهور، أو شخصية أصبحت تبحث عن الكاميرا.</p><p>راقب ما يحدث بعد البث؛ الغضب يصنع غضباً، الخوف يصنع ذعراً، والاستعراض الناجح يجعل آخرين يقلدونه.</p></div></section><section id="end" class="modal"><div class="card"><h2 id="et">—</h2><p id="ed">—</p><button onclick="location.reload()">إعادة التجربة</button></div></section></main><script>
+(()=>{'use strict';const $=x=>document.getElementById(x),C=$('c'),X=C.getContext('2d'),SHT=$('shot'),SX=SHT.getContext('2d'),W=1280,H=720,T=Math.PI*2,R=(a,b)=>a+Math.random()*(b-a),Q=a=>a[(Math.random()*a.length)|0],K=(v,a,b)=>Math.max(a,Math.min(b,v));
+const G={run:0,pause:1,shots:0,phase:0,anger:8,fear:5,trust:70,hype:5,division:0,camera:0,end:0,time:0},L={x:640,y:420,w:320,h:200,d:0};const names='سلمى عمر ليان مالك نور آدم مريم يونس رهف سامي آية كريم لينا أنس هبة زياد جود ريان سارة علي ريم مازن هالة إياد دانا باسل رنا نوح'.split(' '),cols=['#d86659','#d8a04e','#679a82','#6b88b7','#8c74aa','#c17f98','#859663','#b87855'],P=[],E=[];
+for(let i=0;i<28;i++)P.push({i,n:names[i],g:i%2,x:R(60,1220),y:R(300,635),tx:R(60,1220),ty:R(300,635),vx:0,vy:0,s:R(35,58),c:cols[i%8],b:R(0,T),m:'calm',st:'walk',e:null,r:0,f:0,cam:R(0,.08)});
+function free(n,fn=()=>1){return P.filter(p=>!p.e&&fn(p)).sort(()=>Math.random()-.5).slice(0,n)}function spawn(t){if(E.length>4)return;let a=t==='hat'?free(1):t==='camera'?free(1,p=>p.f>12||p.cam>.3):free(2);if(a.length<(t==='hat'||t==='camera'?1:2))return;if(t==='friends'){let x=free(1)[0];if(!x)return;let y=free(1,p=>p!==x&&p.g!==x.g)[0];if(!y)return;a=[x,y]}let e={t,a,x:R(290,1010),y:R(340,570),q:0,life:R(9,12)};E.push(e);a.forEach((p,i)=>{p.e=e;p.r=i;p.st=t;p.tx=e.x+(i?50:-50);p.ty=e.y})}
+function clear(e){e.a.forEach(p=>{p.e=null;p.st='walk';p.m='calm';p.tx=R(60,1220);p.ty=R(300,635)});E.splice(E.indexOf(e),1)}function pose(p,e,d){let i=p.r;p.x+=(p.tx-p.x)*Math.min(1,d*4);p.y+=(p.ty-p.y)*Math.min(1,d*4);p.m=e.t==='fight'?'angry':e.t==='panic'?'fear':e.t==='prank'&&i?'fear':'happy';p.st=e.t;p.face=i?-1:1}
+function upP(p,d){p.b+=d*4;if(p.e)return pose(p,p.e,d);if((p.cam>.45||p.f>25)&&Math.abs(p.x-L.x)<220&&Math.random()<d*.35){p.st='pose';p.m='happy';return}p.st='walk';p.m=p.fear>55?'fear':p.anger>55?'angry':'calm';let dx=p.tx-p.x,dy=p.ty-p.y,z=Math.hypot(dx,dy);if(z<18||Math.random()<d*.05){p.tx=R(60,1220);p.ty=R(300,635);return}z=Math.max(1,z);p.vx+=(dx/z*p.s-p.vx)*d*2;p.vy+=(dy/z*p.s*.7-p.vy)*d*2;p.x+=p.vx*d;p.y+=p.vy*d;p.face=Math.sign(p.vx)||1}
+let st=1;function update(d){if(!G.run||G.pause)return;G.time+=d;st-=d;if(st<0){st=R(2.7,4.4);let pool=['hat','help','friends'];if(G.phase>0)pool.push('fight','prank');if(G.phase>1)pool.push('panic','camera','fight');if(G.anger>45)pool.push('fight','fight');if(G.camera>40)pool.push('camera');spawn(Q(pool))}for(let i=E.length-1;i>=0;i--){E[i].q+=d;if(E[i].q>E[i].life)clear(E[i])}P.forEach(p=>upP(p,d));if(G.shots>=4&&G.phase<1){G.phase=1;toast('المدينة بدأت تقلد ما تشاهده');spawn('fight')}if((G.anger>32||G.hype>30)&&G.phase<2){G.phase=2;toast('الكاميرا أصبحت جزءاً من الحدث');spawn('panic')}if((G.anger>74||G.fear>74||G.shots>=15)&&!G.end)setTimeout(end,300)}
+function rr(g,x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}function person(g,p,news){let q=p.st==='walk'?Math.sin(p.b):0,j=['prank','pose','hat'].includes(p.st)?Math.max(0,Math.sin(p.b*2))*5:0;g.save();g.translate(p.x,p.y-j);g.scale(p.face||1,1);g.strokeStyle='#252a27';g.lineWidth=3;g.lineCap='round';g.beginPath();g.moveTo(-6,24);g.lineTo(-9+q*6,46);g.moveTo(6,24);g.lineTo(9-q*6,46);g.stroke();g.fillStyle=p.c;rr(g,-14,-3,28,36,9);g.fill();g.stroke();g.fillStyle=p.g?'#315f7c':'#a64e42';g.fillRect(-14,20,28,6);let arm=p.st==='fight'?24:p.st==='help'?30:p.st==='panic'?27:18;g.beginPath();g.moveTo(-12,4);g.lineTo(-arm,p.st==='fight'?-12:16);g.moveTo(12,4);g.lineTo(arm,p.st==='fight'?-6:16);g.stroke();g.fillStyle='#e5bb91';if(p.g){rr(g,-17,-37,34,34,6);g.fill();g.stroke()}else{g.beginPath();g.arc(0,-20,17,0,T);g.fill();g.stroke()}if(p.st==='hat'){g.fillStyle='#ddb04a';g.beginPath();g.moveTo(-21,-37);g.lineTo(0,-61);g.lineTo(21,-37);g.closePath();g.fill();g.stroke()}g.fillStyle='#222';g.beginPath();g.arc(-6,-21,2,0,T);g.arc(6,-21,2,0,T);g.fill();g.beginPath();if(p.m==='happy')g.arc(0,-14,6,.2*Math.PI,.8*Math.PI);else if(p.m==='fear')g.arc(0,-14,3,0,T);else{g.moveTo(-3,-14);g.lineTo(3,-14)}g.stroke();if(p.m==='angry'){g.beginPath();g.moveTo(-10,-29);g.lineTo(-3,-25);g.moveTo(10,-29);g.lineTo(3,-25);g.stroke()}if((p.f>28||p.cam>.55)&&!news){g.fillStyle='#eeb848';g.font='bold 14px Tahoma';g.fillText('★',18,-44)}g.restore()}
+function world(g,news=0){g.fillStyle='#dae3dd';g.fillRect(0,0,W,H);let B=[[0,70,185,170],[195,38,180,202],[385,88,145,152],[540,35,185,205],[735,72,155,168],[900,45,180,195],[1090,78,190,162]];B.forEach((b,i)=>{g.fillStyle=i%2?'#b9aa91':'#c7baa1';g.fillRect(...b);g.fillStyle='#53615a';for(let x=b[0]+20;x<b[0]+b[2]-10;x+=36)for(let y=b[1]+23;y<b[1]+b[3]-10;y+=39)g.fillRect(x,y,14,16)});g.fillStyle='#8c918d';g.fillRect(0,212,W,70);g.fillStyle='#c9c1b1';g.fillRect(0,282,W,438);g.fillStyle='#9fb58a';rr(g,40,335,215,215,22);g.fill();rr(g,1030,480,170,150,22);g.fill();g.fillStyle='#a05e4e';rr(g,990,330,205,105,8);g.fill();g.fillStyle='#efd38a';g.fillRect(1005,350,175,22);g.fillStyle='#29302d';g.font='bold 16px Tahoma';g.fillText('مقهى',1090,368);g.fillStyle='#7f9290';g.beginPath();g.ellipse(650,485,105,40,0,0,T);g.fill();[...P].sort((a,b)=>a.y-b.y).forEach(p=>person(g,p,news));if(!news)lens(g)}
+function lens(g){let x=L.x-L.w/2,y=L.y-L.h/2;g.fillStyle='#0003';g.fillRect(0,0,W,y);g.fillRect(0,y,x,L.h);g.fillRect(x+L.w,y,W-x-L.w,L.h);g.fillRect(0,y+L.h,W,H-y-L.h);g.strokeStyle='#fff';g.lineWidth=3;g.setLineDash([11,7]);rr(g,x,y,L.w,L.h,12);g.stroke();g.setLineDash([])}
+function resize(){let r=C.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);C.width=r.width*d;C.height=r.height*d;let s=Math.max(C.width/W,C.height/H),ox=(C.width-W*s)/2,oy=(C.height-H*s)/2;X.setTransform(s,0,0,s,ox,oy);C.map={s,ox,oy}}function pos(e){let r=C.getBoundingClientRect(),m=C.map,x=(e.clientX-r.left)*(C.width/r.width),y=(e.clientY-r.top)*(C.height/r.height);return{x:(x-m.ox)/m.s,y:(y-m.oy)/m.s}}function move(e){if(!G.run||G.pause)return;let p=pos(e);L.x=K(p.x,L.w/2+5,W-L.w/2-5);L.y=K(p.y,L.h/2+110,H-L.h/2-65);$('tip').style.opacity=0}C.onpointerdown=e=>{L.d=1;move(e)};C.onpointermove=e=>L.d&&move(e);C.onpointerup=()=>L.d=0;
+function subs(){return P.filter(p=>Math.abs(p.x-L.x)<L.w*.46&&Math.abs(p.y-L.y)<L.h*.43)}function analyze(){let s=subs(),best;for(const e of E){let a=e.a.filter(p=>s.includes(p));if(a.length&&(!best||a.length>best.a.length))best={e,a}}if(!best)return{k:s.length?'normal':'empty',s,v:s.length>3?'crowd':s.length===1?'one':'group'};let v=best.a.length===best.e.a.length?(s.length>3?'crowd':'full'):'one'+best.a[0].r;return{k:best.e.t,s,v,e:best.e}}
+function story(a){let z={cap:'المدينة تمضي كالمعتاد.',reach:2500,ang:0,fear:0,trust:0,hype:0,div:0,cam:0};if(a.k==='empty')return z;let one=a.v.startsWith('one'),r=one?+a.v.slice(-1):-1,crowd=a.v==='crowd';if(a.k==='hat')Object.assign(z,{cap:'الجميع يتحدث عن القبعة الغريبة.',reach:15000,hype:8,cam:5});if(a.k==='help')one?Object.assign(z,{cap:r?'شخص يحتاج للمساعدة.':'شخص ينحني نحو شيء خارج الصورة.',reach:10000,fear:2,hype:3}):Object.assign(z,{cap:'شخص يساعد غريباً أمام المارة.',reach:crowd?10000:7000,trust:9,ang:-4});if(a.k==='fight')one?Object.assign(z,{cap:'غاضب يصرخ… السبب خارج الصورة.',reach:34000,ang:14,fear:7,trust:-7,div:11}):crowd?Object.assign(z,{cap:'الخوف حول المشادة أصبح هو الخبر.',reach:39000,ang:8,fear:15,hype:9,div:6}):Object.assign(z,{cap:'مشادة بين جماعتين تشعل المدينة.',reach:30000,ang:11,fear:5,trust:-4,div:12});if(a.k==='prank')one?Object.assign(z,{cap:r?'لحظة ذعر بلا سبب ظاهر.':'شخص يستعرض وحده أمام الكاميرا.',reach:30000,fear:r?11:2,hype:13,cam:16,trust:-4}):Object.assign(z,{cap:'مقلب يتحول بسرعة إلى ترند.',reach:36000,ang:4,hype:16,cam:20,trust:-3});if(a.k==='panic')Object.assign(z,{cap:one?'شخص يهرب… من ماذا؟':'الذعر ينتقل من شخص إلى آخر.',reach:42000,fear:22,hype:9,trust:-8});if(a.k==='friends')one?Object.assign(z,{cap:'ابتسامة لشخص خارج الكادر.',reach:3000,trust:1}):Object.assign(z,{cap:'شخصان من جماعتين مختلفتين معاً.',reach:G.division>25?17000:4500,trust:10,ang:-7,div:-13});if(a.k==='camera')Object.assign(z,{cap:'شخص يعرف تماماً أين توجد الكاميرا.',reach:31000,hype:14,cam:22,trust:-3});return z}
+function snap(){let x=L.x-L.w/2,y=L.y-L.h/2,s=Math.max(SHT.width/L.w,SHT.height/L.h);SX.save();SX.clearRect(0,0,SHT.width,SHT.height);SX.setTransform(s,0,0,s,-x*s,-y*s);world(SX,1);SX.restore()}function influence(a,z){G.anger=K(G.anger+z.ang,0,100);G.fear=K(G.fear+z.fear,0,100);G.trust=K(G.trust+z.trust,0,100);G.hype=K(G.hype+z.hype,0,100);G.division=K(G.division+z.div,0,100);G.camera=K(G.camera+z.cam,0,100);let m=K(z.reach/35000,.1,1.4);P.forEach(p=>{p.anger=K((p.anger||0)+z.ang*m*R(.3,.8),0,100);p.fear=K((p.fear||0)+z.fear*m*R(.3,.8),0,100);p.cam=K(p.cam+z.cam/100*R(.15,.6),0,1)});if(a.e)a.e.a.forEach(p=>{p.f+=z.reach/2300;p.cam=K(p.cam+z.cam/80,0,1)});if(z.ang>8)setTimeout(()=>spawn('fight'),700);if(z.fear>10)setTimeout(()=>spawn('panic'),800);if(z.cam>12)setTimeout(()=>spawn('camera'),900)}
+function capture(){if(!G.run||G.pause)return;let a=analyze();if(a.k==='empty')return toast('لا أحد داخل الكادر');let z=story(a);G.shots++;z.reach=Math.round(z.reach*R(.82,1.2)*(1+G.hype/150));snap();$('caption').textContent=z.cap;$('reach').textContent=z.reach>999?Math.round(z.reach/1000)+' ألف مشاهدة':z.reach+' مشاهدة';$('flash').classList.remove('on');void $('flash').offsetWidth;$('flash').classList.add('on');influence(a,z);ui();toast(G.shots===1?'المدينة شاهدت صورتك':z.reach>30000?'الصورة تنتشر بسرعة':'تم البث')}
+function ui(){let v=Math.max(G.anger,G.fear,G.camera*.8,G.division*.85),t=v>75?'على حافة الانفجار':v>55?'متوترة':G.camera>55?'مهووسة بالظهور':G.division>45?'منقسمة':G.trust>72?'واثقة':'هادئة';$('mt').textContent=t;$('mf').style.width=K(v,6,100)+'%';$('mf').style.background=v>70?'#d75649':v>45?'#d6a044':'#719b79'}function toast(t){$('toast').textContent=t;$('toast').classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('on'),1300)}function end(){if(G.end)return;G.end=1;G.run=0;G.pause=1;let t,d;if(G.anger>73){t='الغضب أصبح الخبر';d='الناس تعلموا أن الغضب هو أسرع طريق إلى الشاشة، فبدأوا يصنعونه حتى قبل وصول الكاميرا.'}else if(G.fear>73){t='مدينة ترى الخطر في كل شيء';d='تكررت صور الخوف حتى صار الناس يهربون قبل أن يعرفوا مما يهربون.'}else if(G.camera>65){t='الجميع يؤدي دوراً';d='كثير من الشخصيات أصبحت تتصرف للكاميرا، لا لبعضها.'}else{t='كل صورة غيّرت الصورة التالية';d='المدينة في النهاية ليست ما حدث فقط، بل ما اخترت أن تراه مراراً.'}$('et').textContent=t;$('ed').textContent=d;document.querySelectorAll('.modal').forEach(x=>x.classList.remove('on'));$('end').classList.add('on')}
+$('start').onclick=()=>{document.querySelectorAll('.modal').forEach(x=>x.classList.remove('on'));G.run=1;G.pause=0;spawn('hat');setTimeout(()=>spawn('help'),1300);setTimeout(()=>spawn('friends'),2600);toast('اختر الصورة فقط')};$('cap').onclick=capture;$('help').onclick=()=>{G.pause=1;$('h').classList.add('on')};$('close').onclick=()=>{$('h').classList.remove('on');G.pause=0};addEventListener('resize',resize);resize();ui();let last=performance.now();function loop(t){let d=Math.min(.033,(t-last)/1000);last=t;update(d);X.clearRect(0,0,W,H);world(X);requestAnimationFrame(loop)}requestAnimationFrame(loop)})();
+</script></main></body></html>
