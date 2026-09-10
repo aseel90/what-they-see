@@ -2,7 +2,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101412;color:#fff;touch-action:none}
 button{font:inherit}
-#app{width:100vw;height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) clamp(210px,22vw,292px);direction:ltr;background:#101412}
+#app{width:100vw;height:100dvh;display:grid;grid-template-columns:minmax(0,1fr) clamp(190px,18.5vw,248px);direction:ltr;background:#101412}
 .world-wrap{position:relative;min-width:0;overflow:hidden;background:#d9e2dc;border-right:1px solid #ffffff18}
 #game{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
 .brand{position:absolute;left:12px;top:max(10px,env(safe-area-inset-top));background:#151917dc;border:1px solid #fff2;border-radius:10px;padding:7px 10px;direction:rtl;pointer-events:none;box-shadow:0 6px 20px #0003}.brand b{font-size:14px;display:block}.brand span{display:block;font-size:8px;opacity:.55;margin-top:1px}
@@ -18,4 +18,4 @@ button{font:inherit}
 .rotate{display:none;position:fixed;z-index:100;inset:0;background:#131714;place-items:center;text-align:center;direction:rtl}.rotate>div{display:grid;gap:7px}.rotate b{font-size:54px}.rotate strong{font-size:17px}.rotate span{font-size:10px;opacity:.55}
 @keyframes flash{0%{opacity:.92}100%{opacity:0}}@keyframes pulse{50%{transform:scale(1.25);opacity:.65}}
 @media(orientation:portrait) and (max-width:900px){.rotate{display:grid}}
-@media(max-height:520px){#app{grid-template-columns:minmax(0,1fr) 205px}.broadcast{padding:7px 8px;gap:5px}.broadcast header{height:29px}.screen canvas{aspect-ratio:16/8.7}.caption{min-height:34px;font-size:9px;line-height:1.35}.effect{min-height:42px;font-size:8px;line-height:1.35}.city-state>div{padding:3px 1px}.city-state b{font-size:12px}.reach>div{margin:3px 0}.help{padding:5px}.brand{top:6px}.phase-tag{top:6px}.tip{top:7px}.shutter{width:57px;height:57px;bottom:9px}.shutter i{width:40px;height:40px}}
+@media(max-height:520px){#app{grid-template-columns:minmax(0,1fr) 188px}.broadcast{padding:7px 8px;gap:5px}.broadcast header{height:29px}.screen canvas{aspect-ratio:16/8.7}.caption{min-height:34px;font-size:9px;line-height:1.35}.effect{min-height:42px;font-size:8px;line-height:1.35}.city-state>div{padding:3px 1px}.city-state b{font-size:12px}.reach>div{margin:3px 0}.help{padding:5px}.brand{top:6px}.phase-tag{top:6px}.tip{top:7px}.shutter{width:57px;height:57px;bottom:9px}.shutter i{width:40px;height:40px}}
