@@ -4,54 +4,87 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
   <meta name="theme-color" content="#151715" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <title>ما يرونه — Objects Rebuild</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="rotate" class="rotate"><div><b>↻</b><strong>أدر الهاتف أفقياً</strong><span>اللعبة مصممة للوضع الأفقي</span></div></div>
+  <div id="rotate" class="rotate"><div><b>↻</b><strong>أدر الهاتف أفقياً</strong><span>هذه التجربة مصممة للوضع الأفقي</span></div></div>
+
   <main id="app">
-    <canvas id="game" width="1500" height="900"></canvas>
+    <canvas id="game" width="1600" height="900" aria-label="المجتمع"></canvas>
 
-    <div class="topbar">
-      <div class="brand"><b>ما يرونه</b><small>OBJECTS REBUILD · 0.1</small></div>
-      <div id="chapter" class="chapter">مجتمع عادي</div>
-      <button id="help" class="help">؟</button>
-    </div>
+    <header class="topbar">
+      <div class="brand"><b>ما يرونه</b><small>OBJECTS REBUILD · 0.2</small></div>
+      <div id="phase" class="phase">مجتمع عادي</div>
+      <button id="help" class="help" aria-label="طريقة اللعب">؟</button>
+    </header>
 
-    <div id="hint" class="hint">اسحب شيئًا وأعطه لأي شخص.</div>
+    <div id="hint" class="hint">اسحب شيئًا من الأسفل وأسقطه فوق أي شخص.</div>
     <div id="toast" class="toast"></div>
 
-    <section id="tray" class="tray" aria-label="الأشياء">
-      <div class="tray-copy"><small>الأشياء</small><b>غيّر شخصًا… ثم راقب المجتمع</b></div>
-      <button class="object-card unlocked" data-object="hat"><span class="object-icon hat-icon"></span><b>قبعة</b><small>شيء غريب</small></button>
-      <button class="object-card unlocked" data-object="flower"><span class="object-icon">✿</span><b>وردة</b><small>لفتة طيبة</small></button>
-      <button class="object-card locked" data-object="badge"><span class="object-icon">◆</span><b>شارة</b><small>هوية</small></button>
-      <button class="object-card locked" data-object="megaphone"><span class="object-icon">◖</span><b>مكبّر</b><small>نفوذ</small></button>
-      <button class="object-card locked" data-object="baton"><span class="object-icon">╱</span><b>هراوة</b><small>قوة</small></button>
+    <section id="tray" class="tray" aria-label="الأشياء المتاحة">
+      <div class="tray-copy"><small>الأشياء</small><b>أعطِ شيئًا لشخص واحد، ثم راقب من يتأثر به.</b></div>
+
+      <button class="object-card" data-object="hat" aria-label="قبعة">
+        <span class="object-icon icon-hat"></span><b>قبعة</b><small>تقليد وموضة</small><i class="cooldown"></i>
+      </button>
+      <button class="object-card" data-object="flower" aria-label="وردة">
+        <span class="object-icon icon-flower">✿</span><b>وردة</b><small>تقارب وتعاطف</small><i class="cooldown"></i>
+      </button>
+      <button class="object-card" data-object="coin" aria-label="عملة">
+        <span class="object-icon icon-coin">●</span><b>عملة</b><small>مكانة وحسد</small><i class="cooldown"></i>
+      </button>
+      <button class="object-card locked" data-object="badge" aria-label="شارة">
+        <span class="object-icon icon-badge">◆</span><b>شارة</b><small>هوية وانتماء</small><i class="cooldown"></i>
+      </button>
+      <button class="object-card locked" data-object="megaphone" aria-label="مكبر صوت">
+        <span class="object-icon icon-megaphone">◖</span><b>مكبّر</b><small>يضخّم ما يحمله</small><i class="cooldown"></i>
+      </button>
+      <button class="object-card locked" data-object="baton" aria-label="هراوة">
+        <span class="object-icon icon-baton">╱</span><b>هراوة</b><small>تهديد وقوة</small><i class="cooldown"></i>
+      </button>
+      <button class="object-card locked" data-object="shield" aria-label="درع">
+        <span class="object-icon icon-shield">⬟</span><b>درع</b><small>حماية أو تحصّن</small><i class="cooldown"></i>
+      </button>
     </section>
 
     <div id="dragGhost" class="drag-ghost"></div>
     <div id="flash" class="flash"></div>
 
     <section id="intro" class="modal on">
-      <div class="card">
-        <span class="eyebrow">اتجاه جديد بالكامل</span>
-        <h1>لا كاميرا هذه المرة.</h1>
-        <p>لديك أشياء فقط. أعطِ أي شيء لأي شخص، ثم شاهد ما الذي يفعله المجتمع به. بعض الأشياء تُقلَّد، بعضها يصنع هوية، وبعضها يفتح أشياء أخطر.</p>
-        <p>لا توجد اختيارات مكتوبة بعد ذلك. <b>المجتمع هو الذي يرد.</b></p>
-        <button id="start">ابدأ التجربة</button>
+      <div class="card intro-card">
+        <span class="eyebrow">OBJECTS REBUILD · 0.2</span>
+        <h1>أنت لا تتحكم في الناس.</h1>
+        <p>أنت فقط تضع شيئًا في يد شخص واحد. بعد ذلك يتصرف المجتمع وحده: يقلّد، يقترب، يحسد، ينتمي، يخاف، يتجمع أو يرد بعنف.</p>
+        <p><b>لا توجد كاميرا ولا اختيارات قصصية.</b> كل رحلة تبدأ من Object صغير، ومكان وزمن إعطائه هما قرارك.</p>
+        <div class="starter-row"><span>قبعة</span><i>→</i><span>موضة؟</span><i>·</i><span>وردة</span><i>→</i><span>تقارب؟</span><i>·</i><span>عملة</span><i>→</i><span>مكانة؟</span></div>
+        <button id="start" disabled>تحميل الشخصيات الأصلية…</button>
       </div>
     </section>
 
     <section id="helpModal" class="modal">
-      <div class="card">
-        <button id="closeHelp" class="x">×</button>
-        <h2>طريقة اللعب</h2>
-        <p>اسحب Object من الشريط السفلي وأسقطه فوق أي شخص. كل شخص يمكن أن يصبح نقطة بداية لانتشار مختلف.</p>
-        <p>الأشياء الجديدة تُفتح عندما يتغير المجتمع. لا تحاول الضغط على الناس؛ جرّب أن تزرع شيئًا بينهم ثم راقب.</p>
+      <div class="card help-card">
+        <button id="closeHelp" class="x" aria-label="إغلاق">×</button>
+        <h2>كيف تلعب؟</h2>
+        <p>اسحب أي Object من الشريط وأسقطه فوق شخص حي. لا تضغط على الشخص بعد ذلك. راقب ما يفعله ومن يقترب منه ومن ينسخه.</p>
+        <p>بعض الأشياء تفتح أشياء جديدة عندما يتغير المجتمع. الشارة لا تظهر حتى يتعلم الناس أن الرموز مهمة، والهراوة لا تظهر إلا عندما يصبح التوتر حقيقيًا، والدرع لا يظهر إلا بعد أول اعتداء.</p>
+        <p>لا توجد نتيجة صحيحة واحدة: قد ينتهي المجتمع إلى موضة جماعية، تعاون، طبقات، طوائف، مواجهة مسلحة أو انهيار.</p>
+        <p class="credits">شخصيات النموذج تستخدم فن Nicky Case الأصلي من <b>We Become What We Behold</b> المنشور CC0/Public Domain. الأصوات في هذه النسخة مولّدة داخل المتصفح وليست من اللعبة الأصلية.</p>
+      </div>
+    </section>
+
+    <section id="ending" class="modal">
+      <div class="card end-card">
+        <span class="eyebrow">نهاية هذه الرحلة</span>
+        <h2 id="endTitle">—</h2>
+        <p id="endText">—</p>
+        <div id="endTrace" class="end-trace"></div>
+        <button id="restart">ابدأ مجتمعًا جديدًا</button>
       </div>
     </section>
   </main>
+
   <script src="game.js"></script>
 </body>
 </html>
