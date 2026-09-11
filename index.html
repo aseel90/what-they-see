@@ -3,49 +3,52 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-  <meta name="theme-color" content="#151917" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <title>ما يرونه — Rebuild 1</title>
+  <meta name="theme-color" content="#151715" />
+  <title>ما يرونه — Objects Rebuild</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="rotate" class="rotate"><div><b>↻</b><strong>أدر الهاتف أفقياً</strong><span>اللعبة مصممة للوضع الأفقي</span></div></div>
   <main id="app">
-    <canvas id="game" width="1600" height="900" aria-label="ساحة المدينة"></canvas>
-    <div class="brand"><b>ما يرونه</b><span>REBUILD 1</span></div>
-    <div id="hint" class="hint">حرّك الكادر. التقط فقط ما تريد أن يراه الجميع.</div>
-    <button id="shutter" class="shutter" aria-label="التقاط صورة"><i></i></button>
-    <button id="help" class="help" aria-label="المساعدة">؟</button>
+    <canvas id="game" width="1500" height="900"></canvas>
+
+    <div class="topbar">
+      <div class="brand"><b>ما يرونه</b><small>OBJECTS REBUILD · 0.1</small></div>
+      <div id="chapter" class="chapter">مجتمع عادي</div>
+      <button id="help" class="help">؟</button>
+    </div>
+
+    <div id="hint" class="hint">اسحب شيئًا وأعطه لأي شخص.</div>
     <div id="toast" class="toast"></div>
+
+    <section id="tray" class="tray" aria-label="الأشياء">
+      <div class="tray-copy"><small>الأشياء</small><b>غيّر شخصًا… ثم راقب المجتمع</b></div>
+      <button class="object-card unlocked" data-object="hat"><span class="object-icon hat-icon"></span><b>قبعة</b><small>شيء غريب</small></button>
+      <button class="object-card unlocked" data-object="flower"><span class="object-icon">✿</span><b>وردة</b><small>لفتة طيبة</small></button>
+      <button class="object-card locked" data-object="badge"><span class="object-icon">◆</span><b>شارة</b><small>هوية</small></button>
+      <button class="object-card locked" data-object="megaphone"><span class="object-icon">◖</span><b>مكبّر</b><small>نفوذ</small></button>
+      <button class="object-card locked" data-object="baton"><span class="object-icon">╱</span><b>هراوة</b><small>قوة</small></button>
+    </section>
+
+    <div id="dragGhost" class="drag-ghost"></div>
     <div id="flash" class="flash"></div>
 
     <section id="intro" class="modal on">
-      <div class="card intro-card">
-        <span class="chapter">WHAT THEY SEE · REBUILD 1</span>
-        <h1>ما يرونه</h1>
-        <p>مجتمع عادي. شاشة واحدة. وكاميرا واحدة.</p>
-        <p>لا توجد اختيارات ولا عناوين. قرارك الوحيد هو <b>ماذا تضع داخل الكادر، ومتى تضغط.</b> ما تعرضه على الشاشة سيغيّر ما يحدث بعدها.</p>
-        <div class="loop"><span>حدث</span><i>←</i><span>صورة</span><i>←</i><span>تقليد</span><i>←</i><span>حدث أكبر</span></div>
-        <button id="start">ابدأ</button>
+      <div class="card">
+        <span class="eyebrow">اتجاه جديد بالكامل</span>
+        <h1>لا كاميرا هذه المرة.</h1>
+        <p>لديك أشياء فقط. أعطِ أي شيء لأي شخص، ثم شاهد ما الذي يفعله المجتمع به. بعض الأشياء تُقلَّد، بعضها يصنع هوية، وبعضها يفتح أشياء أخطر.</p>
+        <p>لا توجد اختيارات مكتوبة بعد ذلك. <b>المجتمع هو الذي يرد.</b></p>
+        <button id="start">ابدأ التجربة</button>
       </div>
     </section>
 
     <section id="helpModal" class="modal">
-      <div class="card help-card">
+      <div class="card">
         <button id="closeHelp" class="x">×</button>
-        <h2>لا توجد تعليمات كثيرة</h2>
-        <p>اسحب الكادر فوق الساحة، ثم اضغط زر التصوير. الصورة تظهر فوراً على شاشة المدينة.</p>
-        <p>راقب الناس بعد الصورة. أحياناً يكون المهم داخل الكادر، وأحياناً يكون المهم هو ما تركته خارجه.</p>
-      </div>
-    </section>
-
-    <section id="ending" class="modal">
-      <div class="card end-card">
-        <span class="chapter">النهاية</span>
-        <h2 id="endTitle">—</h2>
-        <p id="endText">—</p>
-        <div id="endLine" class="end-line"></div>
-        <button id="restart">إعادة المدينة</button>
+        <h2>طريقة اللعب</h2>
+        <p>اسحب Object من الشريط السفلي وأسقطه فوق أي شخص. كل شخص يمكن أن يصبح نقطة بداية لانتشار مختلف.</p>
+        <p>الأشياء الجديدة تُفتح عندما يتغير المجتمع. لا تحاول الضغط على الناس؛ جرّب أن تزرع شيئًا بينهم ثم راقب.</p>
       </div>
     </section>
   </main>
